@@ -1,0 +1,9 @@
+spring:
+  application:
+    name: main-service
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 124.221.184.221:8848
+      config:
+        server-addr: 124.221.184.221:8848
