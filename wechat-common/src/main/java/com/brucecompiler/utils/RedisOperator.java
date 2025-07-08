@@ -1,11 +1,12 @@
 package com.brucecompiler.utils;
 
+import java.util.concurrent.TimeUnit;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Component;
 
-import java.util.concurrent.TimeUnit;
 
 /**
  * RedisOperator is a utility class which provides convenient methods
@@ -88,5 +89,13 @@ public class RedisOperator {
         return stringRedisTemplate.opsForHash().increment(name, key, delta);
     }
 
-
+    /**
+     * Store a key-value pair in Redis
+     *
+     * @param key  The key to be stored in Redis. Must not be null
+     * @param value The value to be associated with the key. Must not be null
+     */
+    public void set(String key, String value) {
+        stringRedisTemplate.opsForValue().set(key, value);
+    }
 }
