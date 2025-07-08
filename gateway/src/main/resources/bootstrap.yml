@@ -13,3 +13,27 @@ spring:
         server-addr: 124.221.184.221:8848
       config:
         server-addr: 124.221.184.221:8848
+    gateway:
+      discovery:
+        locator:
+          enabled: true     # 动态路由, 从注册中心根据微服务的名称获得目标节点的地址
+      routes:               # 配置路由规则, (数组/list)
+        - id: authRoute     # 每一项路由规则都有一个唯一的id编号,可以自定义
+          uri: lb://auth-service      # lb代表负载均衡,可以动态的去寻址
+          predicates:
+            - Path=/auth/**,
+        - id: fileRoute
+          uri: lb://file-service
+          predicates:
+            - Path=/file/**
+        - id: mainRoute
+          uri: lb://main-service
+          predicates:
+            - Path=/main/**
+      globalcors:
+        cors-configurations:
+          '[/**]':
+            allowed-origin-patterns: "*"
+            allowed-headers: "*"
+            allowed-methods: "*"
+            allow-credentials: true
